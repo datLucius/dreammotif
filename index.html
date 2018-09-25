@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const dream = document.getElementById("dream");
+      const anaylse = document.getElementById("anaylse");
+      function uniq(words) {
+        // filter words array
+        // if position of current word matches first instance of that word, include in returned array
+        const lowerCaseWords = words.map(item => item.toLowerCase().replace(/[^a-zA-Z]/g, ''));
+        const numbers = words.map(item => item.replace(/[^0-9]/g, ''));
+        const alphaNum = lowerCaseWords.concat(numbers);
+        return alphaNum.filter((item, pos) => alphaNum.indexOf(item) == pos);
+      }
+      function pasteResults(results) {
+        const resDiv = document.createElement("DIV");
+        resDiv.innerHTML = results.join(" ");
+        document.body.append(resDiv);
+      }
+      
+      if(anaylse) {
+        anaylse.addEventListener("click", () => {
+          // create array of dream text
+          const words = dream.value.split(" ");
+          // append div containing unique words found in textarea
+          pasteResults(uniq(words));
+          // clear textarea
+          dream.value = "";
+        })  
+      }
+    })
+  </script>
+</head>
+<body>
+  <h1>DREAMOTIF</h1>
+  <textarea id="dream"></textarea>
+  <button id="anaylse">ANALYSE</button>
+</body>
+</html>
